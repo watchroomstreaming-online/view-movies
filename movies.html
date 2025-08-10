@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watchroom Streaming – Browse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        max-width: 100vw;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        background-color: black;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: black;
+        border-radius: 4px;
+      }
+      a {
+        color: white !important;
+      }
+      body {
+        --color: #224f8d;
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+        font-size: 12px;
+        overflow-x: hidden;
+        flex-direction: column;
+        align-items: center;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(
+          circle at 50% 50%,
+          var(--color) 10%,
+          #000 50%
+        );
+        color: #fff;
+      }
+      header {
+        display: grid;
+        grid-template-areas: "logo search nav";
+        grid-template-columns: 250px auto 200px;
+        width: 100%;
+        gap: 20px;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: radial-gradient(circle at 50% 800%, var(--color), #000);
+        border-bottom: #333 1px solid;
+        .logo {
+          img {
+            max-width: 250px;
+          }
+        }
+      }
+      @media screen and (max-width: 1280px) {
+        header {
+          grid-template-areas:
+            "logo nav"
+            "search search";
+          grid-template-columns: 1fr 1fr;
+          padding: 1rem;
+        }
+      }
+      label {
+        display: flex;
+        grid-area: search;
+        position: relative;
+        width: 97%;
+        svg {
+          width: 20px;
+          aspect-ratio: 1;
+          position: absolute;
+          right: 10px;
+          top: 6px;
+          color: #ffffff;
+          opacity: 0.75;
+        }
+        .searching {
+          display: none;
+          padding: 1rem;
+          position: absolute;
+          width: 95%;
+          background-color: #07111faa;
+          left: 2.5%;
+          top: 100%;
+          border-radius: 0px 0px 10px 10px;
+        }
+      }
+      input {
+        font-family: "Poppins", sans-serif;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        background-color: #b5f1ff32;
+        color: #ffffff;
+        &::placeholder {
+          color: #ffffff;
+          opacity: 0.75;
+        }
+      }
+      nav {
+        display: flex;
+        grid-area: nav;
+        align-items: baseline;
+        justify-content: end;
+        a {
+          color: #ccc;
+          margin-left: 1.5rem;
+          text-decoration: none;
+          font-size: 0.95rem;
+        }
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 3rem 2rem 1rem;
+
+        span {
+          background-color: #000;
+          padding: 0.25rem 1rem;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          color: #ccc;
+          cursor: pointer;
+        }
+        .selected-category {
+          background-color: var(--color);
+          font-weight: 600;
+          color: #fff;
+        }
+      }
+      .title {
+        width: 100%;
+        max-width: 1280px;
+        padding: 4rem 2rem 1rem;
+        h3 {
+          font-size: min(7vw, 30px);
+          line-height: 1.25;
+          margin-bottom: 0.5rem;
+        }
+        p {
+          font-size: 0.75rem;
+          line-height: 1;
+        }
+      }
+      .grid {
+        display: grid;
+        max-width: 1280px;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+        a {
+          max-width: 250px;
+        }
+      }
+      .card {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        border-radius: 6px;
+        aspect-ratio: 2 / 3;
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.75);
+        &:hover {
+          transform: scale(1.05);
+        }
+        &::after {
+          content: attr(data-title);
+          color: #fff;
+          text-transform: capitalize;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.9) 40%,
+            transparent
+          );
+          padding: 0.5rem;
+          font-size: 12px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="/img/logo.png" alt="Watchroom Logo" />
+      </div>
+      <label class=""
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-search h-4 w-4 shrink-0 opacity-50 ltr:mr-2 rtl:ml-2"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input type="text" placeholder="Find a Movie or show" />
+        <span class="searching">
+          Are you looking for: <a href="movie.html"><b>I Robot?</b></a></span
+        >
+      </label>
+
+      <nav>
+        <a href="#">Settings</a>
+        <a href="#">Login</a>
+        <a href="#"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-circle-user size-8"
+            style="margin-bottom: -5px"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="10" r="3"></circle>
+            <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <div class="filters">
+      <span>All</span>
+      <span class="selected-category">Movies</span>
+      <span>Series</span>
+      <span>Drama</span>
+      <span>Fantasy</span>
+      <span>Horror</span>
+      <span>New</span>
+      <span>Trending</span>
+    </div>
+    <div class="title">
+      <h3>Top movies watched this week</h3>
+      <p>The most watched movies right now and must-sees.</p>
+    </div>
+    <main style="width: 100%; max-width: 1280px; padding: 0 2rem">
+      <div class="grid" id="videoGrid"></div>
+    </main>
+    <section
+      style="
+        padding: 2rem;
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+      "
+    >
+      <h2 style="font-size: 2rem; margin-bottom: 1rem">
+        Why Choose WatchRoom?
+      </h2>
+      <p style="color: #ccc; font-size: 1.1rem; line-height: 1.6">
+        WatchRoom isn't just another streaming platform — it's an experience
+        designed to bring people closer together. Whether you're watching with
+        friends across the globe or next to the one you love, we make every
+        moment count.
+      </p>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 2rem;
+          margin-top: 2rem;
+        "
+      >
+        <div
+          style="
+            flex: 1 1 250px;
+            background: #1c1c1c;
+            padding: 1.5rem;
+            border-radius: 10px;
+          "
+        >
+          <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem">
+            Instant Sync
+          </h3>
+          <p style="color: #aaa">
+            No delays, no drama. Everyone sees the same moment at the same time.
+          </p>
+        </div>
+        <div
+          style="
+            flex: 1 1 250px;
+            background: #1c1c1c;
+            padding: 1.5rem;
+            border-radius: 10px;
+          "
+        >
+          <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem">
+            Built-In Reactions
+          </h3>
+          <p style="color: #aaa">
+            React, comment, or just vibe together — right from your couch.
+          </p>
+        </div>
+        <div
+          style="
+            flex: 1 1 250px;
+            background: #1c1c1c;
+            padding: 1.5rem;
+            border-radius: 10px;
+          "
+        >
+          <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem">
+            Secure & Private
+          </h3>
+          <p style="color: #aaa">
+            We care about your experience, not your data. Full control, always.
+          </p>
+        </div>
+      </div>
+    </section>
+    <script>
+      const grid = document.getElementById("videoGrid");
+      const title = document.querySelector(".title h3");
+      const deck = document.querySelector(".title p");
+      const input = document.querySelector("input");
+      const videoURLs = [
+        "https://images.justwatch.com/poster/317457812/s166/the-wild-robot.webp",
+        "https://images.justwatch.com/poster/332267080/s166/m3gan-2-0.webp",
+        "https://images.justwatch.com/poster/239202558/s166/wonder-woman-1984.webp",
+        "https://images.justwatch.com/poster/87608067/s166/harry-potter-and-the-philosophers-stone.webp",
+        "https://images.justwatch.com/poster/66901085/s166/shutter-island.webp",
+        "https://images.justwatch.com/poster/324597869/s332/babygirl-2024.webp",
+        "https://images.justwatch.com/poster/323431759/s166/love-2015.webp",
+        "https://images.justwatch.com/poster/8536826/s166/split.webp",
+        "https://images.justwatch.com/poster/181568587/s332/man-of-steel.webp",
+        "/img/Destined-for-love.webp",
+        "https://images.justwatch.com/poster/9601592/s332/lost-in-translation.webp",
+        "https://images.justwatch.com/poster/85024746/s166/jurassic-world-fallen-kingdom.webp",
+        "https://images.justwatch.com/poster/249473713/s166/dune-2021.webp",
+        "https://images.justwatch.com/poster/326396714/s166/a-minecraft-movie.webp",
+        "https://images.justwatch.com/poster/321842608/s166/venom-3-2024.webp",
+        "https://images.justwatch.com/poster/300177312/s166/spider-man-no-way-home.webp",
+        "https://images.justwatch.com/poster/330025027/s332/the-fantastic-four.webp",
+        "https://images.justwatch.com/poster/253599997/s166/the-batman.webp",
+        "https://images.justwatch.com/poster/210852313/s332/fight-club.webp",
+        "https://images.justwatch.com/poster/302619403/s166/infinity-pool.webp",
+        "https://images.justwatch.com/poster/247178934/s332/plank-face.webp",
+        "https://images.justwatch.com/poster/329649422/s332/the-accountant-2.webp",
+        "https://images.justwatch.com/poster/324176253/s166/kraven-the-hunter.webp",
+        "https://images.justwatch.com/poster/327009156/s332/black-bag.webp",
+        "https://images.justwatch.com/poster/323935593/s166/levons-trade.webp",
+        "https://images.justwatch.com/poster/175431740/s166/final-destination-5.webp",
+        "https://images.justwatch.com/poster/8722026/s332/bruce-almighty.webp",
+        "https://images.justwatch.com/poster/449990/s332/interstellar.webp",
+        "https://images.justwatch.com/poster/300590311/s332/jurassic-world-dominion.webp",
+        "https://images.justwatch.com/poster/303378875/s166/a-man-called-otto.webp",
+        "https://images.justwatch.com/poster/132935108/s166/once-upon-a-time-in-hollywood.webp",
+        "https://images.justwatch.com/poster/172058653/s332/ne-zha.webp",
+        "https://images.justwatch.com/poster/326299678/s332/mickey-17.webp",
+        "https://images.justwatch.com/poster/332602213/s166/happy-gilmore-2.webp",
+        "https://images.justwatch.com/poster/8718449/s332/how-to-train-your-dragon.webp",
+        "https://images.justwatch.com/poster/188059074/s332/john-wick.webp",
+        "https://images.justwatch.com/poster/246418704/s166/infinite.webp",
+        "https://images.justwatch.com/poster/65935157/s166/kung-fu-hustle.webp",
+        "https://images.justwatch.com/poster/321821204/s166/smile-2.webp",
+        "https://images.justwatch.com/poster/140326469/s332/oldboy-2003.webp",
+        "https://images.justwatch.com/poster/252554457/s166/i-robot.webp",
+        "https://images.justwatch.com/poster/188677401/s166/365-days.webp",
+      ];
+
+      function clearGrid() {
+        grid.innerHTML = "";
+      }
+      function setTitle(t, p) {
+        title.textContent = t;
+        deck.textContent = p;
+      }
+
+      function setAllTitles() {
+        videoURLs.forEach((url, index) => {
+          const movieTitle = url
+            .split("/")
+            .pop()
+            .split(".")[0]
+            .replace(/-/g, " ");
+          const moviePoster = url;
+          const movieLink = movieTitle == "i robot" ? `movie.html` : `#`;
+
+          const wrapper = document.createElement("a");
+          const card = document.createElement("div");
+          wrapper.href = movieLink;
+          card.className = "card";
+          card.dataset.title = movieTitle;
+          card.style.backgroundImage = `url('${moviePoster}')`;
+
+          wrapper.appendChild(card);
+          grid.appendChild(wrapper);
+        });
+      }
+      setAllTitles();
+
+      input.addEventListener("keydown", function () {
+        if (this.value.includes("I ro")) {
+          document.querySelector("label span").style.display = "block";
+        } else {
+          document.querySelector("label span").style.display = "none";
+        }
+      });
+      input.addEventListener("change", function (event) {
+        if (this.value === "i robot");
+        {
+          grid.innerHTML = "";
+          setTitle(`Results for: "${this.value}"`, "");
+
+          const wrapper = document.createElement("a");
+          const card = document.createElement("div");
+          wrapper.href = "movie.html";
+          card.className = "card";
+          card.dataset.title = "I Robot";
+          card.style.backgroundImage = `url('https://images.justwatch.com/poster/252554457/s166/i-robot.webp')`;
+
+          wrapper.appendChild(card);
+          grid.appendChild(wrapper);
+        }
+        if (this.value !== "i robot") {
+          clearGrid();
+          setAllTitles();
+          setTitle(
+            "Top movies watched this week",
+            "The most watched movies right now and must-sees."
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Et Øjeblik For Os</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+            @import url("https://fonts.googleapis.com/css2?family=Luxurious+Script&display=swap");
+
+
+            * {
+              -webkit-box-sizing: border-box;
+                      box-sizing: border-box;
+              margin: 0;
+              padding: 0
+      -webkit-user-select: none; /* Chrome/Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+      -o-user-select: none;
+      user-select: none;
+        user-select: none;
+               -webkit-tap-highlight-color: transparent;
+            }
+
+            body {
+              font-family: "Playfair Display", serif;
+              background: -o-linear-gradient(315deg, #f6f2f2, #ffe8ec);
+              background: linear-gradient(135deg, #f6f2f2, #ffe8ec);
+              background-size: cover;
+              background-repeat: no-repeat;
+              color: #222;
+              min-height: 100vh;
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-align: center;
+                  -ms-flex-align: center;
+                      align-items: center;
+              -webkit-box-pack: start;
+                  -ms-flex-pack: start;
+                      justify-content: start;
+              -webkit-box-orient: vertical;
+              -webkit-box-direction: normal;
+                  -ms-flex-direction: column;
+                      flex-direction: column;
+              gap: 2vh;
+              text-align: center;
+              padding: 2rem;
+            }
+
+            h1 {
+              color: #333;
+              font-size: 3rem;
+              font-weight: 100;
+              margin-bottom: 1rem;
+            }
+            p {
+              font: 200 18px/ 1.5 sans-serif;
+              color: #333;
+              margin-bottom: 1rem;
+            }
+
+            .image {
+              max-width: 100%;
+              width: 600px;
+              border-radius: 16px;
+              -webkit-box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+                      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+              border: 4px solid white;
+            }
+            #intro {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-orient: vertical;
+              -webkit-box-direction: normal;
+                  -ms-flex-direction: column;
+                      flex-direction: column;
+              gap: 1rem;
+              max-width: 500px;
+              -webkit-box-pack: center;
+                  -ms-flex-pack: center;
+                      justify-content: center;
+              -webkit-box-align: center;
+                  -ms-flex-align: center;
+                      align-items: center;
+            }
+            button {
+              margin-bottom: 2rem;
+            }
+
+      #box {
+        cursor: pointer;
+        width: 100%;
+        max-width: 500px;
+        aspect-ratio: 1;
+        position: relative;
+        margin: 2rem auto;
+        background: url("/img/back.png");
+        background-repeat: no-repeat;
+        background-position: center 40%;
+        background-size: 100% 30%;
+      }
+      #box:hover h1,
+      #box:focus h1 {
+        -webkit-transform: translateY(30%) scale(1.25);
+            -ms-transform: translateY(30%) scale(1.25);
+                transform: translateY(30%) scale(1.25);
+      }
+      #box img {
+        width: 60%;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+        border-radius: 10px;
+        border: 4px solid white;
+        opacity: 0;
+        max-height: 100%;
+        -o-object-fit: cover;
+           object-fit: cover;
+      }
+      #box h1 {
+        color: transparent !important;
+        position: absolute;
+        font-family: "Luxurious Script", cursive;
+        font-size: clamp(16px, 14vw, 90px);
+        line-height: 1;
+        -webkit-transform: translateY(30%);
+            -ms-transform: translateY(30%);
+                transform: translateY(30%);
+        z-index: 998;
+        bottom: 16%;
+        width: 100%;
+        -webkit-filter: drop-shadow(0px 0px 10px #220101);
+                filter: drop-shadow(0px 0px 10px #220101);
+        -webkit-transition: 250ms ease transform;
+        -o-transition: 250ms ease transform;
+        transition: 250ms ease transform;
+        background: -o-radial-gradient(
+            right bottom,
+            ellipse farthest-corner,
+            #fce47d 10%,
+            #fac966 18%,
+            #c0963c 40%,
+            #cca750 60%,
+            transparent 80%
+          ),
+          -o-radial-gradient(
+            left top,
+            ellipse farthest-corner,
+            #ffffff 10%,
+            #ffffac 18%,
+            #e9cd82 30%,
+            #d1b064 70%,
+            #a1833c 100%
+          );
+        background: radial-gradient(
+            ellipse farthest-corner at right bottom,
+            #fce47d 10%,
+            #fac966 18%,
+            #c0963c 40%,
+            #cca750 60%,
+            transparent 80%
+          ),
+          radial-gradient(
+            ellipse farthest-corner at left top,
+            #ffffff 10%,
+            #ffffac 18%,
+            #e9cd82 30%,
+            #d1b064 70%,
+            #a1833c 100%
+          );
+        -webkit-background-clip: text;
+                background-clip: text;
+      }
+      #box #lid {
+        position: absolute;
+        width: 100%;
+        height: 55%;
+        background: url("/img/lid.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        border-radius: 8px 8px 0 0;
+        top: 0%;
+        left: 0;
+        z-index: 3;
+      }
+      #box #ring {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background: url("/img/ring.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        border-radius: 50%;
+        top: 25%;
+        left: 25%;
+        z-index: 1;
+        -webkit-filter: drop-shadow(0 20px 10px #331933aa);
+                filter: drop-shadow(0 20px 10px #331933aa);
+      }
+      #box #box-front {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url("/img/front.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        border-radius: 8px;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+      }
+            @media (max-width: 768px) {
+              h1 {
+                font-size: 3rem;
+              }
+              .image {
+                width: 90%;
+              }
+            }
+            @-webkit-keyframes box {
+              0% {
+                -webkit-transform: translateY(-40%);
+                        transform: translateY(-40%);
+              }
+              20% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              40% {
+                -webkit-transform: translateY(-20%);
+                        transform: translateY(-20%);
+              }
+              60% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              80% {
+                -webkit-transform: translateY(-10%);
+                        transform: translateY(-10%);
+              }
+              100% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+            }
+            @keyframes box {
+              0% {
+                -webkit-transform: translateY(-20%);
+                        transform: translateY(-20%);
+              }
+              20% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              40% {
+                -webkit-transform: translateY(-10%);
+                        transform: translateY(-10%);
+              }
+              60% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              80% {
+                -webkit-transform: translateY(-10%);
+                        transform: translateY(-10%);
+              }
+              100% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+            }
+            @-webkit-keyframes boxImage {
+              0% {
+                opacity: 0;
+              }
+              100% {
+                -webkit-transform: translate(30%, -35%) rotate(10deg);
+                        transform: translate(30%, -35%) rotate(10deg);
+                opacity: 1;
+              }
+            }
+            @keyframes boxImage {
+              0% {
+                opacity: 0;
+              }
+              100% {
+                -webkit-transform: translate(30%, -35%) rotate(10deg);
+                        transform: translate(30%, -35%) rotate(10deg);
+                opacity: 1;
+              }
+            }
+            @-webkit-keyframes lid {
+              0% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              100% {
+                -webkit-transform: translateY(-50%);
+                        transform: translateY(-50%);
+                opacity: 0;
+              }
+            }
+            @keyframes lid {
+              0% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              100% {
+                -webkit-transform: translateY(-50%);
+                        transform: translateY(-50%);
+                opacity: 0;
+              }
+            }
+            @-webkit-keyframes ring {
+              0% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              100% {
+                -webkit-transform: translate(-60%, -50%) rotate(-10deg);
+                        transform: translate(-60%, -50%) rotate(-10deg);
+              }
+            }
+            @keyframes ring {
+              0% {
+                -webkit-transform: translateY(0%);
+                        transform: translateY(0%);
+              }
+              100% {
+                -webkit-transform: translate(-60%, -50%) rotate(-10deg);
+                        transform: translate(-60%, -50%) rotate(-10deg);
+              }
+            }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img
+        src="https://anotherslegacy.dk/cdn/shop/files/Asset_1_0d235a55-cc52-4086-83b9-04cfb1e89eee.png"
+        alt="Logo"
+        style="width: 250px; margin-bottom: 1rem"
+      />
+    </div>
+    <div id="intro">
+      <img
+        src="https://anotherslegacy.dk/cdn/shop/files/Untitled_design_21.png?v=1745845949&width=3000"
+        alt=""
+        style="
+          width: 150px;
+          border-radius: 10px;
+          aspect-ratio: 1;
+          object-fit: cover;
+          margin-bottom: 1rem;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+        "
+      />
+      <h1>Dejligt at se dig! ❤️</h1>
+      <p>
+        Tryk på smykkeskrinet nedenfor og få en særlig overraskelse der vil
+        følge dig dig resten af livet!
+      </p>
+    </div>
+    <div id="box">
+      <h1 style="color: #fff">Åben gaven!</h1>
+      <img src="/img/os.jpg" alt="" />
+      <div id="lid"></div>
+      <div id="ring"></div>
+      <div id="box-front"></div>
+    </div>
+    <script>
+      document.querySelector("#box").addEventListener("click", function () {
+        startHeartSnow();
+        document.querySelector("#box h1").textContent = "Fra Lorem";
+        document.querySelector("#box").style.animation =
+          "box 1s ease-out forwards";
+        document.querySelector("#lid").style.animation =
+          "lid 2s 2s ease-out forwards";
+        document.querySelector("#ring").style.animation =
+          "ring 1.25s 2.5s ease-out forwards";
+        document.querySelector("#box img").style.animation =
+          "boxImage 1.25s 2.5s ease-out forwards";
+      });
+
+      function startHeartSnow() {
+        const heart = "❤️";
+        const snowContainer = document.createElement("div");
+        document.body.appendChild(snowContainer);
+
+        setInterval(() => {
+          const heartElem = document.createElement("div");
+          heartElem.innerText = heart;
+          heartElem.style.position = "fixed";
+          heartElem.style.top = "-2rem";
+          heartElem.style.left = Math.random() * 100 + "vw";
+          heartElem.style.fontSize = Math.random() * 20 + 16 + "px";
+          heartElem.style.opacity = Math.random();
+          heartElem.style.zIndex = -1;
+          heartElem.style.pointerEvents = "none";
+          heartElem.style.transition = "transform 5s linear";
+
+          snowContainer.appendChild(heartElem);
+
+          // Trigger animation
+          requestAnimationFrame(() => {
+            heartElem.style.transform = `translateY(${
+              window.innerHeight
+            }px) rotate(${Math.random() * 360}deg)`;
+          });
+
+          // Cleanup
+          setTimeout(() => {
+            heartElem.remove();
+          }, 5000);
+        }, 200);
+      }
+    </script>
+  </body>
+</html>
