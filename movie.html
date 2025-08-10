@@ -101,7 +101,7 @@
         background-image: url("https://images.justwatch.com/backdrop/180175379/s1440/i-robot.avif");
         background-size: cover;
         background-position: center;
-        padding-bottom: 15%;
+        padding-bottom: 10%;
         position: relative;
       }
       .overlay {
@@ -430,7 +430,7 @@
             investigation leads him to believe that humanity may be in danger.
           </p>
           <div class="actions">
-            <button>Watch Now</button>
+            <button id="addControls">Watch Now</button>
             <button>+ Add to List</button>
           </div>
           <div class="movie-tags">
@@ -696,10 +696,13 @@
         if (Math.floor(this.currentTime) >= 256 && ad === false)
           setupAdInteraction();
       });
-      // player.controls = true;
+      document.querySelector("#addControls").addEventListener('click', ()=>{
+        player.controls = true;
+      });
     </script>
   </body>
 </html>
+
 
 
 
